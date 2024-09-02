@@ -1,12 +1,22 @@
-  <h2 class="my-6 text-2xl font-medium">Products</h2>
-  <ul class="list-none text-base capitalize font-medium text-neutral-600 flex flex-col gap-y-3">
+<h2 class="my-6 text-2xl font-medium">Products</h2>
+<ul
+  class="list-none text-base capitalize font-medium text-neutral-600 flex flex-col gap-y-3"
+>
+  <li>
+    <a href="/products" class="hover:underline transition-all duration-75"
+      >All</a
+    >
+  </li>
+  @for (category of categories(); track category) {
     <li>
-      <a routerLink="/products" [queryParams]="{ category : 'electronics' }" class="hover:underline transition-all duration-75">electronics</a>
+      <a
+        routerLink="/products"
+        [queryParams]="{ category: category }"
+        class="hover:underline transition-all duration-75"
+        [routerLinkActive]="'underline text-blue-400 duration-[125] ease-in transition'"
+      >
+        {{ category }}
+      </a>
     </li>
-    <li class="">
-      <a routerLink="/products" [queryParams]="{ category : 'jewelery' }" class="hover:underline transition-all duration-75">jewelery</a>
-    </li>
-    <li class="">
-      <a routerLink="/products" [queryParams]="{ category : 'men\'s clothing' }" class="hover:underline transition-all duration-75">men's clothing</a>
-    </li>
-  </ul>
+  }
+</ul>

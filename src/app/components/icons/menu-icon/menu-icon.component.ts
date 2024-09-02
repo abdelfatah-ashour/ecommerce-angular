@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './menu-icon.component.html',
 })
-export class MenuIconComponent {
-
-}
+export class MenuIconComponent {}

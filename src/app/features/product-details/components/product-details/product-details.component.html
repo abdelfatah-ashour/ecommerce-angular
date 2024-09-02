@@ -1,25 +1,35 @@
 <div class="container">
-<div class="my-4 flex gap-x-2">
-  <span class="text-gray-500">Home</span>
-  <span>/</span>
-  <a [routerLink]="'/products'" class="underline">Products</a>
-</div>
-@if(product()){
+  <div class="my-4 flex gap-x-2">
+    <span class="text-gray-500">Home</span>
+    <span>/</span>
+    <a [routerLink]="'/products'" class="underline">Products</a>
+  </div>
+  @if (product()) {
     <main>
       <section class="grid grid-cols-6 mb-12">
         <article class="relative h-[30rem] col-span-5">
-          <img [ngSrc]="product()!.image" [alt]="product()!.title" fill class="absolute inset-0 w-full h-full object-contain object-center" [priority]="1">
+          <img
+            [ngSrc]="product()!.image"
+            [alt]="product()!.title"
+            fill
+            class="absolute inset-0 w-full h-full object-contain object-center"
+            [priority]="1"
+          />
         </article>
         <article class="col-span-1">
           <h2 class="capitalize text-2xl font-medium">details</h2>
           <ul class="list-none flex flex-wrap">
             <li class="w-full flex justify-between items-center py-3">
-              <span class="capitalize text-lg  text-gray-600">rate</span>
-              <span>{{ product()!.rating.rate }} |<small>{{ product()!.rating.count }}</small> </span>
+              <span class="capitalize text-lg text-gray-600">rate</span>
+              <span
+                >{{ product()!.rating.rate }} |<small>{{
+                  product()!.rating.count
+                }}</small>
+              </span>
             </li>
             <li class="w-full flex justify-between items-center py-3">
-              <span class="capitalize text-lg  text-gray-600">price</span>
-              <span>{{ product()!.price | price:'USD' }}</span>
+              <span class="capitalize text-lg text-gray-600">price</span>
+              <span>{{ product()!.price | price: "USD" }}</span>
             </li>
           </ul>
         </article>
@@ -31,5 +41,5 @@
         </p>
       </section>
     </main>
-}
+  }
 </div>

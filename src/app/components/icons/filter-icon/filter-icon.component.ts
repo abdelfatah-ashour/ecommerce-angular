@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './filter-icon.component.html',
 })
-export class FilterIconComponent {
-
-}
+export class FilterIconComponent {}

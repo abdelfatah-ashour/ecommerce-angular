@@ -1,14 +1,13 @@
-import {Directive, ElementRef} from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: 'button[appToggleMenu]',
   standalone: true,
 })
 export class ToggleMenuDirective {
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef) {}
 
-
-  toggleMenu(){
+  toggleMenu() {
     this.elementRef.nativeElement.setAttribute('aria-expanded', 'true');
   }
 }

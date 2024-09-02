@@ -1,0 +1,14 @@
+<a [routerLink]="['/products',product().id]">
+  <div class="shadow border border-gray-200 border-solid w-full">
+    <div class="relative h-72 w-full bg-white">
+      <button class="absolute top-2 right-2 z-10 bg-blue-400 shadow-blue-200 rounded shadow text-white p-1 px-2">sync</button>
+      <img [ngSrc]="product().image" [alt]="product().title" fill class="absolute inset-0 w-3/4 h-60 object-contain object-center p-2" [priority]="1">
+    </div>
+    <div class="p-3 text-center bg-slate-200/50">
+      <h3 class="text-neutral-800 mb-4 line-clamp-2">{{ product().title }}</h3>
+      <span class="text-gray-500">
+        {{ product().price | price:'USD' }}
+    </span>
+    </div>
+  </div>
+</a>

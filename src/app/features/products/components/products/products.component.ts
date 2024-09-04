@@ -25,10 +25,6 @@ export class ProductsComponent implements OnInit {
   params = inject(ParamParserService);
 
   ngOnInit() {
-    this.getProducts.getAllProducts().subscribe((res) => {
-      this.products.set(res);
-    });
-
     this.params.getQueryParams().subscribe((queries) => {
       if (queries['category']) {
         this.getProducts
@@ -36,7 +32,33 @@ export class ProductsComponent implements OnInit {
           .subscribe((res) => {
             this.products.set(res);
           });
+      } else {
+        this.getProducts.getAllProducts().subscribe((res) => {
+          this.products.set(res);
+        });
       }
+    });
+  }
+
+  onSyncItemById(id: number) {
+    this.params.getQueryParams().subscribe((queries) => {
+      const route = queries['category']
+        ? `/products/category/${queries['category']}`
+        : '/products';
+      this.getProducts.syncProductsById(route, id).subscribe((res) => {
+        this.products.set(res);
+      });
+    });
+  }
+
+  onSyncAllProducts() {
+    this.params.getQueryParams().subscribe((queries) => {
+      const route = queries['category']
+        ? `/products/category/${queries['category']}`
+        : '/products';
+      this.getProducts.syncAllProducts(route).subscribe((res) => {
+        this.products.set(res);
+      });
     });
   }
 }

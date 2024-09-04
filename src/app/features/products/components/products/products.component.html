@@ -3,6 +3,10 @@
     <app-menu-side />
   </ng-container>
   <ng-container container>
-    <app-products-list [products]="products()" />
+    <app-products-list
+      [products]="products()"
+      (onSyncProductById)="onSyncItemById($event)"
+      (onSyncAllProducts)="onSyncAllProducts()"
+    />
   </ng-container>
 </app-layout>

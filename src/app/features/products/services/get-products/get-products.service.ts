@@ -45,4 +45,12 @@ export class GetProductsService {
       }
     });
   }
+
+  syncAllProducts(route: string) {
+    return this.cached.updateAllByRoute(route);
+  }
+
+  syncProductsById(route: string, id: number) {
+    return this.cached.updateById(route, id);
+  }
 }

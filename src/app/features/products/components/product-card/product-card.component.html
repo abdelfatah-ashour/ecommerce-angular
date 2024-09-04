@@ -1,8 +1,9 @@
-<a [routerLink]="['/products', product().id]">
+<div (click)="onCardClick()">
   <div class="shadow border border-gray-200 border-solid w-full">
     <div class="relative h-72 w-full bg-white">
       <button
         class="absolute top-2 right-2 z-10 bg-blue-400 shadow-blue-200 rounded shadow text-white p-1 px-2"
+        (click)="onSyncItemById($event, product().id)"
       >
         sync
       </button>
@@ -15,10 +16,21 @@
       />
     </div>
     <div class="p-3 text-center bg-slate-200/50">
-      <h3 class="text-neutral-800 mb-4 line-clamp-2">{{ product().title }}</h3>
-      <span class="text-gray-500">
+      <h3 class="text-neutral-800 mb-4 line-clamp-2 text-start">{{ product().title }}</h3>
+      <div class="flex justify-between items-end mb-4">
+        <span class="text-xl font-bold text-black">
         {{ product().price | price: "USD" }}
-      </span>
+        </span>
+        <div>
+          <span>
+            {{ product().rating.rate}}
+          </span>
+          <span>/</span>
+          <span class="text-xs font-light text-gray-500">
+            {{ product().rating.count}}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
-</a>
+</div>

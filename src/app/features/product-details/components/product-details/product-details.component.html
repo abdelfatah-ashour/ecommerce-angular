@@ -7,7 +7,7 @@
   @if (product()) {
     <main>
       <section class="grid grid-cols-6 mb-12">
-        <article class="relative h-[30rem] col-span-5">
+        <article class="relative h-[30rem] col-span-12 lg:col-span-5 mb-12 lg:mb-0">
           <img
             [ngSrc]="product()!.image"
             [alt]="product()!.title"
@@ -16,16 +16,20 @@
             [priority]="1"
           />
         </article>
-        <article class="col-span-1">
-          <h2 class="capitalize text-2xl font-medium">details</h2>
+        <article class="col-span-12  lg:col-span-1">
+          <h2 class="capitalize font-medium">details</h2>
           <ul class="list-none flex flex-wrap">
             <li class="w-full flex justify-between items-center py-3">
               <span class="capitalize text-lg text-gray-600">rate</span>
-              <span
-                >{{ product()!.rating.rate }} |<small>{{
-                  product()!.rating.count
-                }}</small>
-              </span>
+              <div>
+                 <span>
+                  {{ product()!.rating.rate}}
+                </span>
+                      <span>/</span>
+                      <span class="text-xs font-light text-gray-500">
+                  {{ product()!.rating.count}}
+                </span>
+              </div>
             </li>
             <li class="w-full flex justify-between items-center py-3">
               <span class="capitalize text-lg text-gray-600">price</span>
@@ -35,8 +39,8 @@
         </article>
       </section>
       <section>
-        <h3 class="my-8">{{ product()!.title }}</h3>
-        <p>
+        <h3 class="my-8 text-3xl">{{ product()!.title }}</h3>
+        <p class="my-12">
           {{ product()!.description }}
         </p>
       </section>

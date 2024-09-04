@@ -56,6 +56,7 @@ export class ProductsComponent implements OnInit {
       const route = queries['category']
         ? `/products/category/${queries['category']}`
         : '/products';
+
       this.getProducts.syncAllProducts(route).subscribe((res) => {
         this.products.set(res);
       });

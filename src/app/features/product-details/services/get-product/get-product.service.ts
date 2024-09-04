@@ -20,7 +20,7 @@ export class GetProductService {
         observer.next(productByIdCached);
       } else {
         this.http.get<Product>(route).subscribe((res) => {
-          this.cached.set<Product>(route, res);
+          this.cached.set<Product[]>(route, [res]);
           observer.next(res);
         });
       }

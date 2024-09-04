@@ -32,23 +32,25 @@ export class CacheProductsApiService {
    * @return Observable<Product[]>
    */
   updateAllByRoute(route: string): Observable<Product[]> {
-    this.map.forEach((value: Product[], key) => {
-      this.map.set(
+    return from(this.map).pipe(
+      tap(([key, value]: [string, Product[]]) => {
+        return [key, key === route ? value : []];
+      }),
+      map(([key, value]: [string, Product[]]) => [
         key,
         value.filter((product) => {
           product.price =
             Math.floor(Math.random() * (MAX_NUM - MIN_NUM + 1)) + MIN_NUM;
           product.rating.count =
             Math.floor(Math.random() * (MAX_NUM - MIN_NUM + 1)) + MIN_NUM;
+          product.rating.rate = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
           return product;
         }),
-      );
-    });
-
-    return new Observable((observer) => {
-      this.saveToLocalStorage();
-      observer.next(this.map.get(route));
-    });
+      ]),
+      tap(([key, updatedValue]) => this.map.set(key, updatedValue)),
+      tap(() => this.saveToLocalStorage()),
+      map(() => this.map.get(route)),
+    );
   }
 
   /**
@@ -89,6 +91,7 @@ export class CacheProductsApiService {
 
   saveToLocalStorage() {
     const data = Array.from(this.map.entries());
+    console.log('data', data);
     localStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 

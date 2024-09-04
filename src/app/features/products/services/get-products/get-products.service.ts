@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../../../../services/http-client/http-client.service';
 import { Product } from '../../../../models/product-model';
 import { CacheProductsApiService } from '../../../../services/cache-products-api/cache-products-api.service';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

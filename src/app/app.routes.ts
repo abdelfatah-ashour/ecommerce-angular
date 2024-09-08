@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ProductsComponent } from './features/products/components/products/products.component';
 import { ProductDetailsComponent } from './features/product-details/components/product-details/product-details.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RxjsComponent } from './components/rxjs/rxjs.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
         component: ProductDetailsComponent,
       },
     ],
+  },
+  {
+    path: 'rxjs',
+    component: RxjsComponent,
   },
   {
     path: '**',

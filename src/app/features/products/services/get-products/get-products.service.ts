@@ -2,7 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../../../../services/http-client/http-client.service';
 import { Product } from '../../../../models/product-model';
 import { CacheProductsApiService } from '../../../../services/cache-products-api/cache-products-api.service';
-import { from, Observable } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
+
+const MIN_NUM = 100;
+const MAX_NUM = 10000;
 
 @Injectable({
   providedIn: 'root',
@@ -15,42 +18,62 @@ export class GetProductsService {
   }
 
   getAllProducts() {
-    return new Observable<Product[]>((observer) => {
-      const route = '/products';
-      const cachedProducts = this.cached.get<Product[]>(route);
+    const route = '/products';
+    const cachedProducts = this.cached.get<Product[]>(route);
 
-      if (cachedProducts) {
-        observer.next(cachedProducts);
-      } else {
-        this.http.get<Product[]>('/products').subscribe((res) => {
-          this.cached.set<Product[]>(route, res);
-          observer.next(res);
-        });
-      }
-    });
+    if (cachedProducts) {
+      return of(cachedProducts);
+    } else {
+      return this.http.get<Product[]>(route).pipe(
+        tap((res) => this.cached.set<Product[]>(route, res)), // Cache the result
+      );
+    }
   }
 
   getProductsByCategory(categoryId: string) {
-    return new Observable<Product[]>((observer) => {
-      const route = '/products/category/' + categoryId;
-      const cachedProducts = this.cached.get<Product[]>(route);
+    const route = `/products/category/${categoryId}`;
+    const cachedProducts = this.cached.get<Product[]>(route);
 
-      if (cachedProducts) {
-        observer.next(cachedProducts);
-      } else {
-        this.http.get<Product[]>(route).subscribe((res) => {
-          this.cached.set<Product[]>(route, res);
-          observer.next(res);
-        });
-      }
-    });
+    if (cachedProducts) {
+      return of(cachedProducts);
+    } else {
+      return this.http.get<Product[]>(route).pipe(
+        tap((res) => this.cached.set<Product[]>(route, res)), // Cache the result
+      );
+    }
+  }
+
+  mapProduct(product: Product): Product {
+    product.price =
+      Math.floor(Math.random() * (MAX_NUM - MIN_NUM + 1)) + MIN_NUM;
+    product.rating.count =
+      Math.floor(Math.random() * (MAX_NUM - MIN_NUM + 1)) + MIN_NUM;
+    product.rating.rate = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+    return product;
   }
 
   syncAllProducts(route: string) {
-    return this.cached.updateAllByRoute(route);
+    return this.getAllProducts().pipe(
+      map((res) => res.map((product) => this.mapProduct(product))), // Transform each product
+      tap((transformedProducts) =>
+        this.cached.set<Product[]>(route, transformedProducts),
+      ),
+    );
   }
 
-  syncProductsById(route: string, id: number) {
-    return this.cached.updateById(route, id);
+  syncProductsById(route: string, id: number): Observable<Product[]> {
+    return this.getAllProducts().pipe(
+      map((products) =>
+        products.map((product) => {
+          if (product.id === id) {
+            this.mapProduct(product);
+          }
+          return product;
+        }),
+      ),
+      tap((transformedProducts) => {
+        this.cached.set<Product[]>(route, transformedProducts);
+      }),
+    );
   }
 }

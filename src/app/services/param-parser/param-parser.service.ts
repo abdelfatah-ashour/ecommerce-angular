@@ -1,15 +1,12 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParamParserService {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-  ) {}
+  activatedRoute = inject(ActivatedRoute);
 
   getQueryParams(): Observable<Record<string, string>> {
     return this.activatedRoute.queryParamMap.pipe(

@@ -8,10 +8,12 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { APIInterceptorService } from './services/APIInterceptor/apiinterceptor.service';
+import { provideStore } from '@ngrx/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([APIInterceptorService])),
-  ],
+    provideStore()
+],
 };
